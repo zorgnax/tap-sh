@@ -112,13 +112,35 @@ is () {
     diff=$(diff -U5 -p <(cat <<< "$expected") <(cat <<< "$got"))
     value=$?
     val_ok $value "$desc"
-    if [ $? -ne 0 ]; then
+    if [ $value -ne 0 ]; then
         if [[ "$got$expected" =~ $'\n' ]]; then
             diff=$(sed -n '/@@/,$p' <<< "$diff")
             diag "$diff"
         else
             diag "         got: '$got'"
             diag "    expected: '$expected'"
+        fi
+    fi
+    return $value
+}
+
+isnt () {
+    local got unexpected desc value
+    if [ -t 0 ]; then
+        got=$1 unexpected=$2 desc=$3
+    else
+        got=$1 unexpected=$(cat) desc=$2
+    fi
+    [ "$got" != "$unexpected" ]
+    value=$?
+    val_ok $value "$desc"
+    if [ $value -ne 0 ]; then
+        if [[ "$got" =~ $'\n' ]]; then
+            diag "didn't expect:"
+            diag "$got"
+        else
+            diag "         got: '$got'"
+            diag "    expected: anything else"
         fi
     fi
     return $value
