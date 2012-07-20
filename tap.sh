@@ -18,27 +18,10 @@ diag () {
     note "$@" >&2
 }
 
-run () {
-    local cmd
-    if [ -t 0 ]; then
-        cmd=$@
-    else
-        cmd=$(cat)
-    fi
-    GOT=$(eval $cmd 2>&1)
-}
-
-ok () {
-    local cmd desc test file line
-    if [ -t 0 ]; then
-        cmd=$1 desc=$2
-    else
-        cmd=$(cat) desc=$1
-    fi
-    run $cmd
-    test=$?
+val_ok () {
+    local value=$1 desc=$2 file line
     ((CURRENT_TEST++))
-    if [ $test -ne 0 ]; then
+    if [ "$value" -ne 0 ]; then
         echo -n "not "
     fi
     echo -n "ok $CURRENT_TEST"
@@ -46,7 +29,7 @@ ok () {
         echo -n " - $desc"
     fi
     echo ""
-    if [ $test -ne 0 ]; then
+    if [ "$value" -ne 0 ]; then
         if [ "${FUNCNAME[@]: -1}" = "main" ]; then
             file=${BASH_SOURCE[-1]}
             line=${BASH_LINENO[-2]}
@@ -65,39 +48,70 @@ ok () {
         echo "line $line"
         ((FAILED_TESTS++))
     fi
-    return $test
+    return $value
 }
 
-nok () {
-    local cmd desc test file line
+val_nok () {
+    local value=$1 desc=$2
+    if [ "$value" -eq 0 ]; then
+        fail "$desc"
+    else
+        pass "$desc"
+    fi
+}
+
+pass () {
+    local desc=$1
+    val_ok 0 "$desc"
+}
+
+fail () {
+    local desc=$1
+    val_ok 1 "$desc"
+}
+
+run () {
+    local cmd
+    if [ -t 0 ]; then
+        cmd=$@
+    else
+        cmd=$(cat)
+    fi
+    GOT=$(eval "$cmd" 2>&1)
+}
+
+ok () {
+    local cmd desc
     if [ -t 0 ]; then
         cmd=$1 desc=$2
     else
         cmd=$(cat) desc=$1
     fi
-    run $cmd
+    GOT=$(eval "$cmd" 2>&1)
+    val_ok $? "$desc"
+}
+
+nok () {
+    local cmd desc
+    if [ -t 0 ]; then
+        cmd=$1 desc=$2
+    else
+        cmd=$(cat) desc=$1
+    fi
+    GOT=$(eval "$cmd" 2>&1)
     val_nok $? "$desc"
 }
 
-val_ok () {
-    local value=$1 desc=$2
-    ok "[ \"$value\" -eq 0 ]" "$desc"
-}
-
-val_nok () {
-    local value=$1 desc=$2
-    ok "[ \"$value\" -ne 0 ]" "$desc"
-}
-
 is () {
-    local got expected desc diff
+    local got expected desc diff value
     if [ -t 0 ]; then
         got=$1 expected=$2 desc=$3
     else
         got=$1 expected=$(cat) desc=$2
     fi
     diff=$(diff -U5 -p <(cat <<< "$expected") <(cat <<< "$got"))
-    val_ok $? "$desc"
+    value=$?
+    val_ok $value "$desc"
     if [ $? -ne 0 ]; then
         if [[ "$got$expected" =~ $'\n' ]]; then
             diff=$(sed -n '/@@/,$p' <<< "$diff")
@@ -107,5 +121,6 @@ is () {
             diag "    expected: '$expected'"
         fi
     fi
+    return $value
 }
 
