@@ -1,7 +1,7 @@
 #!/bin/bash
 . tap.sh
 
-plan 2
+plan 3
 
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
@@ -63,6 +63,17 @@ ok 14 - foo
 ok 15
 ok 16
 ok 17
+EOEXPECTED
+
+run ./t/plan
+is "$GOT" <<EOEXPECTED "plan"
+1..-2
+1..0
+1..1
+1..2
+1..1000000
+1..1000000000000
+tap.sh: line 15: [: hello world: integer expression expected
 EOEXPECTED
 
 done_testing
