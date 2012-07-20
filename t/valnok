@@ -1,0 +1,27 @@
+#!/bin/bash
+. tap.sh
+val_nok 0
+val_nok 0 "foo"
+val_nok <<EOVALUE 0
+hello world
+EOVALUE
+val_nok 1
+val_nok 1 "foo"
+val_nok 2
+val_nok 255
+val_nok 256
+val_nok 257
+val_nok 1000000
+val_nok 1000000000000
+val_nok
+val_nok ""
+val_nok "" "foo"
+val_nok "this is a string with spaces"
+val_nok <<EOVALUE
+hello world
+foo bar baz
+EOVALUE
+val_nok <<EOVALUE "foo"
+hello world
+foo bar baz
+EOVALUE
