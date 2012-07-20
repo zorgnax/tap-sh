@@ -1,6 +1,6 @@
 NO_PLAN=-1
 SKIP_ALL=-2
-EXPECTED_TESTS=NO_PLAN
+EXPECTED_TESTS=$NO_PLAN
 FAILED_TESTS=0
 CURRENT_TEST=0
 GOT=
@@ -11,6 +11,36 @@ plan () {
     if [ "$tests" -ne "$NO_PLAN" ]; then
         echo "1..$tests"
     fi
+}
+
+done_testing () {
+    local value=0
+    if [ "$EXPECTED_TESTS" -eq "$NO_PLAN" ]; then
+        echo "1..$CURRENT_TEST"
+    elif [ "$CURRENT_TEST" -ne "$EXPECTED_TESTS" ]; then
+        echo -n "# Looks like you planned $EXPECTED_TESTS test" >&2
+        if [ "$EXPECTED_TESTS" -ne 1 ]; then
+            echo -n "s" >&2
+        fi
+        echo " but ran $CURRENT_TEST." >&2
+        value=255
+    fi
+    if [ "$FAILED_TESTS" -gt 0 ]; then
+        echo -n "# Looks like you failed $FAILED_TESTS test" >&2
+        if [ "$FAILED_TESTS" -ne 1 ]; then
+            echo -n "s" >&2
+        fi
+        echo " of $CURRENT_TEST run." >&2
+        if [ "$EXPECTED_TESTS" -eq "$NO_PLAN" ]; then
+            value=$FAILED_TESTS
+        else
+            value=$((EXPECTED_TESTS - CURRENT_TEST + FAILED_TESTS))
+        fi
+    fi
+    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
+        exit $value
+    fi
+    return $value
 }
 
 val_ok () {
