@@ -1,6 +1,8 @@
 #!/bin/bash
 . tap.sh
 
+plan 1
+
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
 ok 1
@@ -37,4 +39,6 @@ not ok 16
 not ok 17
 #  Failed test at ./t/valok line 24
 EOEXPECTED
+
+done_testing
 
