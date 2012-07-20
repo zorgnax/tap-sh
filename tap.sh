@@ -4,7 +4,6 @@ EXPECTED_TESTS=NO_PLAN
 FAILED_TESTS=0
 CURRENT_TEST=0
 GOT=
-EXPECTED=
 
 val_ok () {
     local value=$1 desc=$2 file line
