@@ -111,13 +111,14 @@ diag () {
 }
 
 run () {
-    local cmd
+    local cmd var
     if [ -t 0 ]; then
-        cmd=$@
+        cmd=$1 var=$2
     else
-        cmd=$(cat)
+        cmd=$(cat) var=$1
     fi
-    GOT=$(eval "$cmd" 2>&1)
+    var=${var:-GOT}
+    eval "$var=\$(eval \"\$cmd\" 2>&1)"
 }
 
 ok () {
