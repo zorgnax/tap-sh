@@ -6,18 +6,6 @@ CURRENT_TEST=0
 GOT=
 EXPECTED=
 
-note () {
-    if [ $# -gt 0 ]; then
-        echo "$@" | note
-        return
-    fi
-    sed 's/.*/# &/'
-}
-
-diag () {
-    note "$@" >&2
-}
-
 val_ok () {
     local value=$1 desc=$2 file line
     ((CURRENT_TEST++))
@@ -68,6 +56,18 @@ pass () {
 fail () {
     local desc=$1
     val_ok 1 "$desc"
+}
+
+note () {
+    if [ $# -gt 0 ]; then
+        echo "$@" | note
+        return
+    fi
+    sed 's/.*/# &/'
+}
+
+diag () {
+    note "$@" >&2
 }
 
 run () {
