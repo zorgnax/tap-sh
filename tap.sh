@@ -5,6 +5,14 @@ FAILED_TESTS=0
 CURRENT_TEST=0
 GOT=
 
+plan () {
+    local tests=$1
+    EXPECTED_TESTS=$tests
+    if [ "$tests" -ne "$NO_PLAN" ]; then
+        echo "1..$tests"
+    fi
+}
+
 val_ok () {
     local value=$1 desc=$2 file line
     ((CURRENT_TEST++))
