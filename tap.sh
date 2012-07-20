@@ -1,3 +1,7 @@
+# tap.sh - Write tests in Bash
+# Copyright 2012 Jake Gelbman <gelbman@gmail.com>
+# Subject to the GPL, version 2.
+
 NO_PLAN=-1
 SKIP_ALL=-2
 EXPECTED_TESTS=$NO_PLAN
