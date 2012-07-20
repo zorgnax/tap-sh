@@ -85,6 +85,9 @@ val_ok () {
 
 val_nok () {
     local value=$1 desc=$2
+    if ! [[ "$value" =~ ^[0-9]+$ ]]; then
+        value=1
+    fi
     if [ "$value" -eq 0 ]; then
         fail "$desc"
     else
