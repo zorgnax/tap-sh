@@ -46,6 +46,9 @@ done_testing () {
 val_ok () {
     local value=$1 desc=$2 file line
     ((CURRENT_TEST++))
+    if ! [[ "$value" =~ ^[0-9]+$ ]]; then
+        value=1
+    fi
     if [ "$value" -ne 0 ]; then
         echo -n "not "
     fi
