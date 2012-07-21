@@ -219,3 +219,9 @@ odot () {
     unset TODO
 }
 
+bail_out () {
+    local desc=$1
+    echo "Bail out!  $desc"
+    exit 255
+}
+

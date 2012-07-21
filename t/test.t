@@ -1,7 +1,7 @@
 #!/bin/bash
 . tap.sh
 
-plan 16
+plan 17
 
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
@@ -279,6 +279,12 @@ ok 3 - foo # TODO later not now never always
 not ok 4 - bar # TODO later not now never always
 #  Failed (TODO) test 'bar'
 #  at ./t/todo line 9
+EOEXPECTED
+
+run ./t/bailout
+is "$GOT" <<EOEXPECTED "bail_out"
+Bail out!  
+Bail out!  stop that
 EOEXPECTED
 
 done_testing
