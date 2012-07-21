@@ -37,14 +37,11 @@ done_testing () {
             value=$((EXPECTED_TESTS - CURRENT_TEST + FAILED_TESTS))
         fi
     fi
-    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
-        exit $value
-    fi
-    return $value
+    exit $value
 }
 
 val_ok () {
-    local value=$1 desc=$2 file line
+    local value=$1 desc=$2
     ((CURRENT_TEST++))
     if ! [[ "$value" =~ ^[0-9]+$ ]]; then
         value=1
@@ -64,12 +61,6 @@ val_ok () {
     fi
     echo ""
     if [ "$value" -ne 0 ]; then
-        if [ "${FUNCNAME[@]: -1}" = "main" ]; then
-            file=${BASH_SOURCE[-1]}
-            line=${BASH_LINENO[-2]}
-        else
-            line=${BASH_LINENO[-1]}
-        fi
         echo -n "#  Failed " >&2
         if [ -n "${TODO+set}" ]; then
             echo -n "(TODO) " >&2
@@ -79,11 +70,7 @@ val_ok () {
             echo "'$desc'" >&2
             echo -n "#  " >&2
         fi
-        echo -n "at "
-        if [ -n "$file" ]; then
-            echo -n "$file "
-        fi
-        echo "line $line"
+        echo "at ${BASH_SOURCE[-1]} line ${BASH_LINENO[-2]}"
         ((FAILED_TESTS++))
     fi
     return $value
@@ -221,9 +208,7 @@ skip_all () {
         desc=" $desc"
     fi
     echo "1..0 # SKIP$desc"
-    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
-        exit 0
-    fi
+    exit 0
 }
 
 todo () {
