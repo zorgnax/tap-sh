@@ -1,0 +1,19 @@
+#!/bin/bash
+. tap.sh
+skip true 3 || {
+    ok true foo
+    ok false bar
+}
+skip false 3 || {
+    ok true baz
+    ok false bax
+}
+skip true 3 "a description" || {
+    ok true hello
+    ok false world
+}
+skip false 3 "a description" || {
+    ok true herp
+    ok false derp
+}
+

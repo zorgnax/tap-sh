@@ -1,7 +1,7 @@
 #!/bin/bash
 . tap.sh
 
-plan 13
+plan 14
 
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
@@ -243,6 +243,24 @@ not ok 6
 # hello
 # world!
 ok 7
+EOEXPECTED
+
+run ./t/skip
+is "$GOT" <<EOEXPECTED "skip"
+ok 1 - # skip
+ok 2 - # skip
+ok 3 - # skip
+ok 4 - baz
+not ok 5 - bax
+#  Failed test 'bax'
+#  at ./t/skip line 9
+ok 6 - # skip a description
+ok 7 - # skip a description
+ok 8 - # skip a description
+ok 9 - herp
+not ok 10 - derp
+#  Failed test 'derp'
+#  at ./t/skip line 17
 EOEXPECTED
 
 done_testing

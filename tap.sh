@@ -194,3 +194,18 @@ isnt () {
     return $value
 }
 
+skip () {
+    local cmd=$1 n=$2 desc=$3 value
+    GOT=$(eval "$cmd" 2>&1)
+    value=$?
+    if [ $value -eq 0 ]; then
+        if [ -n "$desc" ]; then
+            desc=" $desc"
+        fi
+        for i in $(seq $n); do
+            pass "# skip$desc"
+        done
+    fi
+    return $value
+}
+
