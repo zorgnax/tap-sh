@@ -1,0 +1,10 @@
+#!/bin/bash
+. tap.sh
+todo
+ok true foo
+ok false bar
+odot
+todo "later not now never always"
+ok true foo
+ok false bar
+odot

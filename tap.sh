@@ -59,6 +59,12 @@ val_ok () {
     if [ -n "$desc" ]; then
         echo -n " - $desc"
     fi
+    if [ -n "${TODO+set}" ]; then
+        echo -n " # TODO"
+    fi
+    if [ -n "$TODO" ]; then
+        echo -n " $TODO"
+    fi
     echo ""
     if [ "$value" -ne 0 ]; then
         if [ "${FUNCNAME[@]: -1}" = "main" ]; then
@@ -67,7 +73,11 @@ val_ok () {
         else
             line=${BASH_LINENO[-1]}
         fi
-        echo -n "#  Failed test " >&2
+        echo -n "#  Failed " >&2
+        if [ -n "${TODO+set}" ]; then
+            echo -n "(TODO) " >&2
+        fi
+        echo -n "test " >&2
         if [ -n "$desc" ]; then
             echo "'$desc'" >&2
             echo -n "#  " >&2
@@ -217,5 +227,13 @@ skip_all () {
     if [ "${FUNCNAME[@]: -1}" = "main" ]; then
         exit 0
     fi
+}
+
+todo () {
+    TODO=$1
+}
+
+odot () {
+    unset TODO
 }
 

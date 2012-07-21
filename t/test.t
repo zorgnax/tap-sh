@@ -1,7 +1,7 @@
 #!/bin/bash
 . tap.sh
 
-plan 15
+plan 16
 
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
@@ -267,6 +267,18 @@ is "$GOT" <<EOEXPECTED "skip_all"
 1..0 # SKIP
 1..0 # SKIP this is a description
 1..0 # SKIP skippy skip skip on skip
+EOEXPECTED
+
+run ./t/todo
+is "$GOT" <<EOEXPECTED "todo"
+ok 1 - foo # TODO
+not ok 2 - bar # TODO
+#  Failed (TODO) test 'bar'
+#  at ./t/todo line 5
+ok 3 - foo # TODO later not now never always
+not ok 4 - bar # TODO later not now never always
+#  Failed (TODO) test 'bar'
+#  at ./t/todo line 9
 EOEXPECTED
 
 done_testing
