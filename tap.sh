@@ -9,11 +9,8 @@ CURRENT_TEST=0
 GOT=
 
 plan () {
-    local tests=$1
-    EXPECTED_TESTS=$tests
-    if [ "$tests" -ne "$NO_PLAN" ]; then
-        echo "1..$tests"
-    fi
+    EXPECTED_TESTS=$1
+    echo "1..$EXPECTED_TESTS"
 }
 
 done_testing () {

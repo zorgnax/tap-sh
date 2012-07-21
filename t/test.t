@@ -72,7 +72,7 @@ is "$GOT" <<EOEXPECTED "plan"
 1..2
 1..1000000
 1..1000000000000
-tap.sh: line 14: [: hello world: integer expression expected
+1..hello world
 EOEXPECTED
 
 run ./t/donetesting
