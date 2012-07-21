@@ -225,3 +225,27 @@ bail_out () {
     exit 255
 }
 
+test_ok () {
+    local a op b desc value
+    if [[ "$1" =~ ^- ]]; then
+        op=$1 a=$2 desc=$3
+        test $op $a
+        value=$?
+        val_ok $value "$desc"
+        if [ "$value" -ne 0 ]; then
+            diag "    $op $a"
+        fi
+    else
+        a=$1 op=$2 b=$3 desc=$4
+        test $a $op $b
+        value=$?
+        val_ok $value "$desc"
+        if [ "$value" -ne 0 ]; then
+            diag "    $a"
+            diag "        $op"
+            diag "    $b"
+        fi
+    fi
+    return $value
+}
+

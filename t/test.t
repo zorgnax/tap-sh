@@ -1,7 +1,7 @@
 #!/bin/bash
 . tap.sh
 
-plan 17
+plan 18
 
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
@@ -285,6 +285,195 @@ run ./t/bailout
 is "$GOT" <<EOEXPECTED "bail_out"
 Bail out!  
 Bail out!  stop that
+EOEXPECTED
+
+run ./t/testok
+is "$GOT" <<EOEXPECTED "test_ok"
+ok 1
+ok 2
+not ok 3
+#  Failed test at ./t/testok line 5
+#     -z foo
+ok 4
+not ok 5
+#  Failed test at ./t/testok line 7
+#     hello
+#         =
+#     world
+ok 6
+ok 7
+not ok 8
+#  Failed test at ./t/testok line 10
+#     hello
+#         !=
+#     hello
+ok 9
+not ok 10
+#  Failed test at ./t/testok line 12
+#     1
+#         -eq
+#     2
+ok 11
+not ok 12
+#  Failed test at ./t/testok line 14
+#     1
+#         -ge
+#     2
+ok 13
+not ok 14
+#  Failed test at ./t/testok line 16
+#     1
+#         -gt
+#     2
+not ok 15
+#  Failed test at ./t/testok line 17
+#     2
+#         -le
+#     1
+ok 16
+not ok 17
+#  Failed test at ./t/testok line 19
+#     2
+#         -lt
+#     1
+ok 18
+not ok 19
+#  Failed test at ./t/testok line 21
+#     1
+#         -ne
+#     1
+ok 20
+not ok 21
+#  Failed test at ./t/testok line 23
+#     foo
+#         -ef
+#     bar
+not ok 22
+#  Failed test at ./t/testok line 24
+#     foo
+#         -nt
+#     bar
+not ok 23
+#  Failed test at ./t/testok line 25
+#     foo
+#         -ot
+#     bar
+not ok 24
+#  Failed test at ./t/testok line 26
+#     -b foo
+not ok 25
+#  Failed test at ./t/testok line 27
+#     -c foo
+not ok 26
+#  Failed test at ./t/testok line 28
+#     -L foo
+not ok 27
+#  Failed test at ./t/testok line 29
+#     -f foo
+not ok 28
+#  Failed test at ./t/testok line 30
+#     -r foo
+ok 29 - baz
+ok 30 - baz
+not ok 31 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 33
+#     -z foo
+ok 32 - baz
+not ok 33 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 35
+#     hello
+#         =
+#     world
+ok 34 - baz
+ok 35 - baz
+not ok 36 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 38
+#     hello
+#         !=
+#     hello
+ok 37 - baz
+not ok 38 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 40
+#     1
+#         -eq
+#     2
+ok 39 - baz
+not ok 40 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 42
+#     1
+#         -ge
+#     2
+ok 41 - baz
+not ok 42 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 44
+#     1
+#         -gt
+#     2
+not ok 43 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 45
+#     2
+#         -le
+#     1
+ok 44 - baz
+not ok 45 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 47
+#     2
+#         -lt
+#     1
+ok 46 - baz
+not ok 47 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 49
+#     1
+#         -ne
+#     1
+ok 48 - baz
+not ok 49 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 51
+#     foo
+#         -ef
+#     bar
+not ok 50 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 52
+#     foo
+#         -nt
+#     bar
+not ok 51 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 53
+#     foo
+#         -ot
+#     bar
+not ok 52 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 54
+#     -b foo
+not ok 53 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 55
+#     -c foo
+not ok 54 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 56
+#     -L foo
+not ok 55 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 57
+#     -f foo
+not ok 56 - baz
+#  Failed test 'baz'
+#  at ./t/testok line 58
+#     -r foo
 EOEXPECTED
 
 done_testing

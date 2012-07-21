@@ -1,0 +1,59 @@
+#!/bin/bash
+. tap.sh
+test_ok -n "foo"
+test_ok -n ""
+test_ok -z "foo"
+test_ok -z ""
+test_ok "hello" = "world"
+test_ok "hello" = "hello"
+test_ok "hello" != "world"
+test_ok "hello" != "hello"
+test_ok 1 -eq 1
+test_ok 1 -eq 2
+test_ok 2 -ge 1
+test_ok 1 -ge 2
+test_ok 2 -gt 1
+test_ok 1 -gt 2
+test_ok 2 -le 1
+test_ok 1 -le 2
+test_ok 2 -lt 1
+test_ok 1 -lt 2
+test_ok 1 -ne 1
+test_ok 1 -ne 2
+test_ok foo -ef bar
+test_ok foo -nt bar
+test_ok foo -ot bar
+test_ok -b foo
+test_ok -c foo
+test_ok -L foo
+test_ok -f foo
+test_ok -r foo
+test_ok -n "foo" "baz"
+test_ok -n "" "baz"
+test_ok -z "foo" "baz"
+test_ok -z "" "baz"
+test_ok "hello" = "world" "baz"
+test_ok "hello" = "hello" "baz"
+test_ok "hello" != "world" "baz"
+test_ok "hello" != "hello" "baz"
+test_ok 1 -eq 1 "baz"
+test_ok 1 -eq 2 "baz"
+test_ok 2 -ge 1 "baz"
+test_ok 1 -ge 2 "baz"
+test_ok 2 -gt 1 "baz"
+test_ok 1 -gt 2 "baz"
+test_ok 2 -le 1 "baz"
+test_ok 1 -le 2 "baz"
+test_ok 2 -lt 1 "baz"
+test_ok 1 -lt 2 "baz"
+test_ok 1 -ne 1 "baz"
+test_ok 1 -ne 2 "baz"
+test_ok foo -ef bar "baz"
+test_ok foo -nt bar "baz"
+test_ok foo -ot bar "baz"
+test_ok -b foo "baz"
+test_ok -c foo "baz"
+test_ok -L foo "baz"
+test_ok -f foo "baz"
+test_ok -r foo "baz"
+
