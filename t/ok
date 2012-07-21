@@ -1,0 +1,34 @@
+#!/bin/bash
+. tap.sh
+ok true
+echo $?
+ok true foo
+echo $?
+ok <<EOCMD
+true
+EOCMD
+echo $?
+ok <<EOCMD foo
+true
+EOCMD
+echo $?
+ok false
+echo $?
+ok false foo
+echo $?
+ok <<EOCMD
+false
+EOCMD
+echo $?
+ok <<EOCMD foo
+false
+EOCMD
+echo $?
+ok <<EOCMD bar
+for f in hello world!; do
+    echo [\$f]
+done
+EOCMD
+echo $?
+echo "$GOT"
+

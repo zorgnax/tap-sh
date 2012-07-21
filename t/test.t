@@ -1,7 +1,7 @@
 #!/bin/bash
 . tap.sh
 
-plan 4
+plan 13
 
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
@@ -84,6 +84,165 @@ is "$GOT" <<EOEXPECTED "done_testing"
 1..0
 1..1
 ok 1
+EOEXPECTED
+
+run ./t/pass
+is "$GOT" <<EOEXPECTED "pass"
+ok 1
+ok 2 - Set Pounce
+EOEXPECTED
+
+run ./t/fail
+is "$GOT" <<EOEXPECTED "fail"
+not ok 1
+#  Failed test at ./t/fail line 3
+not ok 2 - Lady Whiskers
+#  Failed test 'Lady Whiskers'
+#  at ./t/fail line 4
+EOEXPECTED
+
+run "./t/note 2>/dev/null"
+is "$GOT" <<EOEXPECTED "note"
+# foo
+# foo
+# bar
+# 
+# hello
+# world!
+EOEXPECTED
+
+run "./t/diag >/dev/null"
+is "$GOT" <<EOEXPECTED "diag"
+# foo
+# foo
+# bar
+# 
+# hello
+# world!
+EOEXPECTED
+
+run ./t/run
+is "$GOT" <<EOEXPECTED "run"
+0
+1
+0
+1
+Tommen
+Boots
+EOEXPECTED
+
+run ./t/ok
+is "$GOT" <<EOEXPECTED "ok"
+ok 1
+0
+ok 2 - foo
+0
+ok 3
+0
+ok 4 - foo
+0
+not ok 5
+#  Failed test at ./t/ok line 15
+1
+not ok 6 - foo
+#  Failed test 'foo'
+#  at ./t/ok line 17
+1
+not ok 7
+#  Failed test at ./t/ok line 19
+1
+not ok 8 - foo
+#  Failed test 'foo'
+#  at ./t/ok line 23
+1
+ok 9 - bar
+0
+[hello]
+[world!]
+EOEXPECTED
+
+run ./t/nok
+is "$GOT" <<EOEXPECTED "nok"
+not ok 1
+#  Failed test at ./t/nok line 3
+1
+not ok 2 - foo
+#  Failed test 'foo'
+#  at ./t/nok line 5
+1
+not ok 3
+#  Failed test at ./t/nok line 7
+1
+not ok 4 - foo
+#  Failed test 'foo'
+#  at ./t/nok line 11
+1
+ok 5
+0
+ok 6 - foo
+0
+ok 7
+0
+ok 8 - foo
+0
+not ok 9 - bar
+#  Failed test 'bar'
+#  at ./t/nok line 27
+1
+[hello]
+[world!]
+EOEXPECTED
+
+run ./t/is
+is "$GOT" <<EOEXPECTED "is"
+ok 1
+ok 2 - foo
+not ok 3
+#  Failed test at ./t/is line 5
+#          got: 'hello'
+#     expected: 'world!'
+not ok 4 - foo
+#  Failed test 'foo'
+#  at ./t/is line 6
+#          got: 'hello'
+#     expected: 'world!'
+ok 5
+ok 6
+not ok 7
+#  Failed test at ./t/is line 12
+# @@ -1,6 +1,2 @@
+#  hello
+#  world!
+# -and some more stuff
+# -that i am expecting
+# -to be there always
+# -never
+EOEXPECTED
+
+run ./t/isnt
+is "$GOT" <<EOEXPECTED "isnt"
+not ok 1
+#  Failed test at ./t/isnt line 3
+#          got: 'hello'
+#     expected: anything else
+not ok 2 - foo
+#  Failed test 'foo'
+#  at ./t/isnt line 4
+#          got: 'hello'
+#     expected: anything else
+ok 3
+ok 4 - foo
+not ok 5
+#  Failed test at ./t/isnt line 7
+# didn't expect:
+# hello
+# world!
+not ok 6
+#  Failed test at ./t/isnt line 8
+# didn't expect:
+# hello
+# world!
+ok 7
 EOEXPECTED
 
 done_testing

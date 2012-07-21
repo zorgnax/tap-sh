@@ -1,0 +1,19 @@
+#!/bin/bash
+. tap.sh
+run true
+echo $?
+run false
+echo $?
+run <<EOCMD
+true
+EOCMD
+echo $?
+run <<EOCMD
+false
+EOCMD
+echo $?
+run "echo Tommen"
+echo $GOT
+run "echo Boots" FOO
+echo $FOO
+

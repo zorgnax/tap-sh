@@ -1,0 +1,5 @@
+#!/bin/bash
+. tap.sh
+fail
+fail "Lady Whiskers"
+

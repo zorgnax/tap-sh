@@ -1,0 +1,20 @@
+#!/bin/bash
+. tap.sh
+isnt "hello" "hello"
+isnt "hello" "hello" "foo"
+isnt "hello" "world!"
+isnt "hello" "world!" "foo"
+isnt $'hello\nworld!' $'hello\nworld!'
+isnt $'hello\nworld!' <<EOEXPECTED
+hello
+world!
+EOEXPECTED
+isnt $'hello\nworld!' <<EOEXPECTED
+hello
+world!
+and some more stuff
+that i am expecting
+to be there always
+never
+EOEXPECTED
+

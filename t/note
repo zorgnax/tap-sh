@@ -1,0 +1,10 @@
+#!/bin/bash
+. tap.sh
+note foo
+note $'foo\nbar'
+note ""
+note <<EOF
+hello
+world!
+EOF
+
