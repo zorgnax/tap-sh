@@ -89,7 +89,7 @@ EOEXPECTED
 run ./t/pass
 is "$GOT" <<EOEXPECTED "pass"
 ok 1
-ok 2 - Set Pounce
+ok 2 - Ser Pounce
 EOEXPECTED
 
 run ./t/fail
