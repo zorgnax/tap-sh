@@ -1,7 +1,7 @@
 #!/bin/bash
 . tap.sh
 
-plan 14
+plan 15
 
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
@@ -67,13 +67,12 @@ EOEXPECTED
 
 run ./t/plan
 is "$GOT" <<EOEXPECTED "plan"
-1..-2
 1..0
 1..1
 1..2
 1..1000000
 1..1000000000000
-tap.sh: line 15: [: hello world: integer expression expected
+tap.sh: line 14: [: hello world: integer expression expected
 EOEXPECTED
 
 run ./t/donetesting
@@ -261,6 +260,13 @@ ok 9 - herp
 not ok 10 - derp
 #  Failed test 'derp'
 #  at ./t/skip line 17
+EOEXPECTED
+
+run ./t/skipall
+is "$GOT" <<EOEXPECTED "skip_all"
+1..0 # SKIP
+1..0 # SKIP this is a description
+1..0 # SKIP skippy skip skip on skip
 EOEXPECTED
 
 done_testing

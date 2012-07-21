@@ -1,7 +1,6 @@
 #!/bin/bash
 . tap.sh
 plan $NO_PLAN
-plan $SKIP_ALL
 plan 0
 plan 1
 plan 2

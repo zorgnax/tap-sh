@@ -3,7 +3,6 @@
 # Subject to the GPL, version 2.
 
 NO_PLAN=-1
-SKIP_ALL=-2
 EXPECTED_TESTS=$NO_PLAN
 FAILED_TESTS=0
 CURRENT_TEST=0
@@ -207,5 +206,16 @@ skip () {
         done
     fi
     return $value
+}
+
+skip_all () {
+    local desc=$1
+    if [ -n "$desc" ]; then
+        desc=" $desc"
+    fi
+    echo "1..0 # SKIP$desc"
+    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
+        exit 0
+    fi
 }
 
