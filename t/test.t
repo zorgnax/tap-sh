@@ -1,7 +1,7 @@
 #!/bin/bash
 . tap.sh
 
-plan 18
+plan 20
 
 run ./t/valok
 is "$GOT" <<EOEXPECTED "val_ok"
@@ -474,6 +474,95 @@ not ok 56 - baz
 #  Failed test 'baz'
 #  at ./t/testok line 58
 #     -r foo
+EOEXPECTED
+
+run ./t/like
+is "$GOT" <<EOEXPECTED "like"
+ok 1
+ok 2
+not ok 3
+#  Failed test at ./t/like line 5
+#                    'foo'
+#     doesn't match: 'b'
+ok 4
+not ok 5
+#  Failed test at ./t/like line 7
+#                    'strangerl'
+#     doesn't match: '^s.(r).*\1$'
+ok 6
+ok 7
+crone one
+ok 8 - baz
+ok 9 - baz
+not ok 10 - baz
+#  Failed test 'baz'
+#  at ./t/like line 13
+#                    'foo'
+#     doesn't match: 'b'
+ok 11 - baz
+not ok 12 - baz
+#  Failed test 'baz'
+#  at ./t/like line 15
+#                    'strangerl'
+#     doesn't match: '^s.(r).*\1$'
+ok 13 - baz
+ok 14 - baz
+crone one
+EOEXPECTED
+
+run ./t/unlike
+is "$GOT" <<EOEXPECTED "unlike"
+not ok 1
+#  Failed test at ./t/unlike line 3
+#                    'foo'
+#           matches: ''
+not ok 2
+#  Failed test at ./t/unlike line 4
+#                    'foo'
+#           matches: 'o'
+ok 3
+not ok 4
+#  Failed test at ./t/unlike line 6
+#                    'stranger'
+#           matches: '^s.(r).*\1$'
+ok 5
+not ok 6
+#  Failed test at ./t/unlike line 8
+#                    'strangerlurr'
+#           matches: '^s.(r).*\1$'
+not ok 7
+#  Failed test at ./t/unlike line 9
+#                    'crone'
+#           matches: 'cr([e-o]*)'
+crone one
+not ok 8 - baz
+#  Failed test 'baz'
+#  at ./t/unlike line 11
+#                    'foo'
+#           matches: ''
+not ok 9 - baz
+#  Failed test 'baz'
+#  at ./t/unlike line 12
+#                    'foo'
+#           matches: 'o'
+ok 10 - baz
+not ok 11 - baz
+#  Failed test 'baz'
+#  at ./t/unlike line 14
+#                    'stranger'
+#           matches: '^s.(r).*\1$'
+ok 12 - baz
+not ok 13 - baz
+#  Failed test 'baz'
+#  at ./t/unlike line 16
+#                    'strangerlurr'
+#           matches: '^s.(r).*\1$'
+not ok 14 - baz
+#  Failed test 'baz'
+#  at ./t/unlike line 17
+#                    'crone'
+#           matches: 'cr([e-o]*)'
+crone one
 EOEXPECTED
 
 done_testing

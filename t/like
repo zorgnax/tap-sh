@@ -1,0 +1,18 @@
+#!/bin/bash
+. tap.sh
+like "foo" ""
+like "foo" "o"
+like "foo" "b"
+like "stranger" "^s.(r).*\\1$"
+like "strangerl" "^s.(r).*\\1$"
+like "strangerlurr" "^s.(r).*\\1$"
+like "crone" "cr([e-o]*)"
+echo ${BASH_REMATCH[*]}
+like "foo" "" "baz"
+like "foo" "o" "baz"
+like "foo" "b" "baz"
+like "stranger" "^s.(r).*\\1$" "baz"
+like "strangerl" "^s.(r).*\\1$" "baz"
+like "strangerlurr" "^s.(r).*\\1$" "baz"
+like "crone" "cr([e-o]*)" "baz"
+echo ${BASH_REMATCH[*]}

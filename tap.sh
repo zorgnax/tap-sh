@@ -43,7 +43,7 @@ done_testing () {
 val_ok () {
     local value=$1 desc=$2
     ((CURRENT_TEST++))
-    if ! [[ "$value" =~ ^[0-9]+$ ]]; then
+    if [ -z "${value##*[!0-9]*}" ]; then
         value=1
     fi
     if [ "$value" -ne 0 ]; then
@@ -245,6 +245,30 @@ test_ok () {
             diag "        $op"
             diag "    $b"
         fi
+    fi
+    return $value
+}
+
+like () {
+    local got=$1 regex=$2 desc=$3
+    [[ "$got" =~ $regex ]]
+    value=$?
+    val_ok $value "$desc"
+    if [ "$value" -ne 0 ]; then
+        diag "                   '$got'"
+        diag "    doesn't match: '$regex'"
+    fi
+    return $value
+}
+
+unlike () {
+    local got=$1 regex=$2 desc=$3
+    ! [[ "$got" =~ $regex ]]
+    value=$?
+    val_ok $value "$desc"
+    if [ "$value" -ne 0 ]; then
+        diag "                   '$got'"
+        diag "          matches: '$regex'"
     fi
     return $value
 }

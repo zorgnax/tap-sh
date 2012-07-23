@@ -1,0 +1,18 @@
+#!/bin/bash
+. tap.sh
+unlike "foo" ""
+unlike "foo" "o"
+unlike "foo" "b"
+unlike "stranger" "^s.(r).*\\1$"
+unlike "strangerl" "^s.(r).*\\1$"
+unlike "strangerlurr" "^s.(r).*\\1$"
+unlike "crone" "cr([e-o]*)"
+echo ${BASH_REMATCH[*]}
+unlike "foo" "" "baz"
+unlike "foo" "o" "baz"
+unlike "foo" "b" "baz"
+unlike "stranger" "^s.(r).*\\1$" "baz"
+unlike "strangerl" "^s.(r).*\\1$" "baz"
+unlike "strangerlurr" "^s.(r).*\\1$" "baz"
+unlike "crone" "cr([e-o]*)" "baz"
+echo ${BASH_REMATCH[*]}
