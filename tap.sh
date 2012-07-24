@@ -260,3 +260,33 @@ unlike () {
     return $value
 }
 
+run_is () {
+    local cmd=$1 expected=$2 desc=$3
+    if [ "$expected" = "-" ]; then
+        expected=$(cat)
+    fi
+    GOT=$(eval "$cmd" 2>&1)
+    is "$GOT" "$expected" "$desc"
+}
+
+run_isnt () {
+    local cmd=$1 unexpected=$2 desc=$3
+    if [ "$unexpected" = "-" ]; then
+        unexpected=$(cat)
+    fi
+    GOT=$(eval "$cmd" 2>&1)
+    isnt "$GOT" "$unexpected" "$desc"
+}
+
+run_like () {
+    local cmd=$1 regex=$2 desc=$3
+    GOT=$(eval "$cmd" 2>&1)
+    like "$GOT" "$regex" "$desc"
+}
+
+run_unlike () {
+    local cmd=$1 regex=$2 desc=$3
+    GOT=$(eval "$cmd" 2>&1)
+    unlike "$GOT" "$regex" "$desc"
+}
+
