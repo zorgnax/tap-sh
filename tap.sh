@@ -108,44 +108,36 @@ diag () {
 }
 
 run () {
-    local cmd var
-    if [ -t 0 ]; then
-        cmd=$1 var=$2
-    else
-        cmd=$(cat) var=$1
+    local cmd=$1 var=$2
+    if [ "$cmd" = "-" ]; then
+        cmd=$(cat)
     fi
     var=${var:-GOT}
     eval "$var=\$(eval \"\$cmd\" 2>&1)"
 }
 
 ok () {
-    local cmd desc
-    if [ -t 0 ]; then
-        cmd=$1 desc=$2
-    else
-        cmd=$(cat) desc=$1
+    local cmd=$1 desc=$2
+    if [ "$cmd" = "-" ]; then
+        cmd=$(cat)
     fi
     GOT=$(eval "$cmd" 2>&1)
     val_ok $? "$desc"
 }
 
 nok () {
-    local cmd desc
-    if [ -t 0 ]; then
-        cmd=$1 desc=$2
-    else
-        cmd=$(cat) desc=$1
+    local cmd=$1 desc=$2
+    if [ "$cmd" = "-" ]; then
+        cmd=$(cat)
     fi
     GOT=$(eval "$cmd" 2>&1)
     val_nok $? "$desc"
 }
 
 is () {
-    local got expected desc diff value
-    if [ -t 0 ]; then
-        got=$1 expected=$2 desc=$3
-    else
-        got=$1 expected=$(cat) desc=$2
+    local got=$1 expected=$2 desc=$3 diff value
+    if [ "$expected" = "-" ]; then
+        expected=$(cat)
     fi
     diff=$(diff -U5 -p <(cat <<< "$expected") <(cat <<< "$got"))
     value=$?
@@ -163,11 +155,9 @@ is () {
 }
 
 isnt () {
-    local got unexpected desc value
-    if [ -t 0 ]; then
-        got=$1 unexpected=$2 desc=$3
-    else
-        got=$1 unexpected=$(cat) desc=$2
+    local got=$1 unexpected=$2 desc=$3 value
+    if [ "$unexpected" = "-" ]; then
+        unexpected=$(cat)
     fi
     [ "$got" != "$unexpected" ]
     value=$?
