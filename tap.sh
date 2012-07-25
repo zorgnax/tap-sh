@@ -70,7 +70,7 @@ val_ok () {
             echo "'$desc'" >&2
             echo -n "#  " >&2
         fi
-        echo "at ${BASH_SOURCE[-1]} line ${BASH_LINENO[-2]}"
+        echo "at ${BASH_SOURCE[-1]} line ${BASH_LINENO[-2]}" >&2
         ((FAILED_TESTS++))
     fi
     return $value
