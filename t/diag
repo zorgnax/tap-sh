@@ -1,9 +1,14 @@
 #!/bin/bash
-. tap.sh
-diag foo
-diag $'foo\nbar'
+. t/test.sh
+tap_is $'diag foo
+diag $\'foo\\nbar\'
 diag ""
 diag <<EOF
 hello
 world!
-EOF
+EOF' '# foo
+# foo
+# bar
+# 
+# hello
+# world!'

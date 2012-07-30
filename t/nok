@@ -1,6 +1,6 @@
 #!/bin/bash
-. tap.sh
-nok true
+. t/test.sh
+tap_is $'nok true
 echo $?
 nok true foo
 echo $?
@@ -26,9 +26,32 @@ EOCMD
 echo $?
 nok <<EOCMD bar
 for f in hello world!; do
-    echo [\$f]
+    echo [\\$f]
 done
 EOCMD
 echo $?
-echo "$GOT"
+echo "$GOT"' $'not ok 1
+#  Failed test at line 1
+1
+not ok 2 - foo
+#  Failed test \'foo\'
+#  at line 3
+1
+not ok 3
+#  Failed test at line 5
+1
+ok 4
+0
+ok 5
+0
+ok 6 - foo
+0
+not ok 7
+#  Failed test at line 17
+1
+ok 8
+0
+ok 9
+0
+tap.sh: line 146: bar: command not found'
 

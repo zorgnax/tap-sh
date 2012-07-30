@@ -1,6 +1,6 @@
 #!/bin/bash
-. tap.sh
-run true
+. t/test.sh
+tap_is $'run true
 echo $?
 run false
 echo $?
@@ -15,5 +15,10 @@ echo $?
 run "echo Tommen"
 echo $GOT
 run "echo Boots" FOO
-echo $FOO
+echo $FOO' $'0
+1
+0
+0
+Tommen
+Boots'
 
