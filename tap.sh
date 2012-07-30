@@ -37,11 +37,14 @@ done_testing () {
             value=$((EXPECTED_TESTS - CURRENT_TEST + FAILED_TESTS))
         fi
     fi
-    exit $value
+    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
+        exit $value
+    fi
+    return $value
 }
 
 val_ok () {
-    local value=$1 desc=$2
+    local value=$1 desc=$2 file line
     ((CURRENT_TEST++))
     if [ -z "${value##*[!0-9]*}" ]; then
         value=1
@@ -70,7 +73,17 @@ val_ok () {
             echo "'$desc'" >&2
             echo -n "#  " >&2
         fi
-        echo "at ${BASH_SOURCE[-1]} line ${BASH_LINENO[-2]}" >&2
+        if [ "${FUNCNAME[@]: -1}" = "main" ]; then
+            file=${BASH_SOURCE[-1]}
+            line=${BASH_LINENO[-2]}
+        else
+            line=${BASH_LINENO[-1]}
+        fi
+        echo -n "at " >&2
+        if [ -n "$file" ]; then
+            echo -n "$file " >&2
+        fi
+        echo "line $line" >&2
         ((FAILED_TESTS++))
     fi
     return $value
@@ -195,7 +208,10 @@ skip_all () {
         desc=" $desc"
     fi
     echo "1..0 # SKIP$desc"
-    exit 0
+    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
+        exit 0
+    fi
+    return 0
 }
 
 todo () {
@@ -209,7 +225,10 @@ odot () {
 bail_out () {
     local desc=$1
     echo "Bail out!  $desc"
-    exit 255
+    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
+        exit 255
+    fi
+    return 255
 }
 
 test_ok () {
