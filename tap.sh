@@ -309,3 +309,42 @@ run_unlike () {
     unlike "$GOT" "$regex" "$desc"
 }
 
+sub_run () {
+    local cmd=$1 var=$2
+    if [ "$cmd" = "-" ]; then
+        cmd=$(cat)
+    fi
+    var=${var:-GOT}
+    eval "$var=\$(bash -c \"\$cmd\" 2>&1)"
+}
+
+sub_run_is () {
+    local cmd=$1 expected=$2 desc=$3
+    if [ "$expected" = "-" ]; then
+        expected=$(cat)
+    fi
+    GOT=$(bash -c "$cmd" 2>&1)
+    is "$GOT" "$expected" "$desc"
+}
+
+sub_run_isnt () {
+    local cmd=$1 unexpected=$2 desc=$3
+    if [ "$unexpected" = "-" ]; then
+        unexpected=$(cat)
+    fi
+    GOT=$(bash -c "$cmd" 2>&1)
+    isnt "$GOT" "$unexpected" "$desc"
+}
+
+sub_run_like () {
+    local cmd=$1 regex=$2 desc=$3
+    GOT=$(bash -c "$cmd" 2>&1)
+    like "$GOT" "$regex" "$desc"
+}
+
+sub_run_unlike () {
+    local cmd=$1 regex=$2 desc=$3
+    GOT=$(bash -c "$cmd" 2>&1)
+    unlike "$GOT" "$regex" "$desc"
+}
+
