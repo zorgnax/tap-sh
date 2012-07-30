@@ -77,7 +77,7 @@ val_ok () {
             file=${BASH_SOURCE[-1]}
             line=${BASH_LINENO[-2]}
         else
-            line=${BASH_LINENO[-1]}
+            line=$((BASH_LINENO[-1] + 1))
         fi
         echo -n "at " >&2
         if [ -n "$file" ]; then
