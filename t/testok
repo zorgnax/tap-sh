@@ -240,4 +240,5 @@ not ok 56 - baz
 #  Failed test \'baz\'
 #  at line 56
 #     -r foo'
+done_testing
 

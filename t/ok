@@ -55,4 +55,5 @@ not ok 9
 #  Failed test at line 25
 127
 tap.sh: line 137: bar: command not found'
+done_testing
 

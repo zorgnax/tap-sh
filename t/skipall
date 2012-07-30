@@ -9,3 +9,5 @@ echo "doesn\'t happen"' $'1..0 # SKIP
 1..0 # SKIP this is a description
 1..0 # SKIP skippy skip skip on skip
 doesn\'t happen'
+done_testing
+

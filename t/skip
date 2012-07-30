@@ -29,4 +29,5 @@ ok 9 - herp
 not ok 10 - derp
 #  Failed test \'derp\'
 #  at line 15'
+done_testing
 

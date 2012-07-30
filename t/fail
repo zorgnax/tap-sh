@@ -6,4 +6,5 @@ fail "Lady Whiskers"' $'not ok 1
 not ok 2 - Lady Whiskers
 #  Failed test \'Lady Whiskers\'
 #  at line 2'
+done_testing
 

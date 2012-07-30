@@ -66,3 +66,4 @@ not ok 14 - baz
 #                    \'crone\'
 #           matches: \'cr([e-o]*)\'
 crone one'
+done_testing

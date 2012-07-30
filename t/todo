@@ -15,3 +15,5 @@ ok 3 - foo # TODO later not now never always
 not ok 4 - bar # TODO later not now never always
 #  Failed (TODO) test \'bar\'
 #  at line 7'
+done_testing
+

@@ -54,4 +54,5 @@ ok 8
 ok 9
 0
 tap.sh: line 146: bar: command not found'
+done_testing
 

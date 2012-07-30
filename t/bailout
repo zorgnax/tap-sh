@@ -6,4 +6,5 @@ tap_is \
 ' \
 'Bail out!  
 Bail out!  stop that'
+done_testing
 

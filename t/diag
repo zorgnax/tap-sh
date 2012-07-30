@@ -12,3 +12,4 @@ EOF' '# foo
 # 
 # hello
 # world!'
+done_testing
