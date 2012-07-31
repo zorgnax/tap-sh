@@ -305,6 +305,18 @@ sub_run () {
     return ${!retval}
 }
 
+sub_ok () {
+    local cmd=$1 desc=$2
+    sub_run "$cmd"
+    val_ok $? "$desc"
+}
+
+sub_nok () {
+    local cmd=$1 desc=$2
+    sub_run "$cmd"
+    val_nok $? "$desc"
+}
+
 sub_run_is () {
     local cmd=$1 expected=$2 desc=$3
     sub_run "$cmd"
