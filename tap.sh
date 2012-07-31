@@ -7,6 +7,7 @@ EXPECTED_TESTS=$NO_PLAN
 FAILED_TESTS=0
 CURRENT_TEST=0
 GOT=
+RETVAL=
 
 plan () {
     EXPECTED_TESTS=$1
@@ -121,12 +122,15 @@ diag () {
 }
 
 run () {
-    local cmd=$1 var=$2
+    local cmd=$1 var=$2 retval=$3
     if [ "$cmd" = "-" ]; then
         read -r -d '' cmd
     fi
     var=${var:-GOT}
+    retval=${retval:-RETVAL}
     eval "$var=\$(eval \"\$cmd\" 2>&1)"
+    eval "$retval=$?"
+    return ${!retval};
 }
 
 ok () {
@@ -134,7 +138,7 @@ ok () {
     if [ "$cmd" = "-" ]; then
         read -r -d '' cmd
     fi
-    GOT=$(eval "$cmd" 2>&1)
+    run "$cmd"
     val_ok $? "$desc"
 }
 
@@ -143,7 +147,7 @@ nok () {
     if [ "$cmd" = "-" ]; then
         read -r -d '' cmd
     fi
-    GOT=$(eval "$cmd" 2>&1)
+    run "$cmd"
     val_nok $? "$desc"
 }
 
@@ -182,10 +186,8 @@ isnt () {
 }
 
 skip () {
-    local cmd=$1 n=$2 desc=$3 value
-    GOT=$(eval "$cmd" 2>&1)
-    value=$?
-    if [ $value -eq 0 ]; then
+    local cmd=$1 n=$2 desc=$3
+    if run "$cmd"; then
         if [ -n "$desc" ]; then
             desc=" $desc"
         fi
@@ -193,7 +195,7 @@ skip () {
             pass "# skip$desc"
         done
     fi
-    return $value
+    return $RETVAL
 }
 
 skip_all () {
@@ -275,58 +277,61 @@ unlike () {
 
 run_is () {
     local cmd=$1 expected=$2 desc=$3
-    GOT=$(eval "$cmd" 2>&1)
+    run "$cmd"
     is "$GOT" "$expected" "$desc"
 }
 
 run_isnt () {
     local cmd=$1 unexpected=$2 desc=$3
-    GOT=$(eval "$cmd" 2>&1)
+    run "$cmd"
     isnt "$GOT" "$unexpected" "$desc"
 }
 
 run_like () {
     local cmd=$1 regex=$2 desc=$3
-    GOT=$(eval "$cmd" 2>&1)
+    run "$cmd"
     like "$GOT" "$regex" "$desc"
 }
 
 run_unlike () {
     local cmd=$1 regex=$2 desc=$3
-    GOT=$(eval "$cmd" 2>&1)
+    run "$cmd"
     unlike "$GOT" "$regex" "$desc"
 }
 
 sub_run () {
-    local cmd=$1 var=$2
+    local cmd=$1 var=$2 retval=$3
     if [ "$cmd" = "-" ]; then
         read -r -d '' cmd
     fi
     var=${var:-GOT}
+    retval=${retval:-RETVAL}
     eval "$var=\$(bash -c \"\$cmd\" 2>&1)"
+    eval "$retval=$?"
+    return ${!retval}
 }
 
 sub_run_is () {
     local cmd=$1 expected=$2 desc=$3
-    GOT=$(bash -c "$cmd" 2>&1)
+    sub_run "$cmd"
     is "$GOT" "$expected" "$desc"
 }
 
 sub_run_isnt () {
     local cmd=$1 unexpected=$2 desc=$3
-    GOT=$(bash -c "$cmd" 2>&1)
+    sub_run "$cmd"
     isnt "$GOT" "$unexpected" "$desc"
 }
 
 sub_run_like () {
     local cmd=$1 regex=$2 desc=$3
-    GOT=$(bash -c "$cmd" 2>&1)
+    sub_run "$cmd"
     like "$GOT" "$regex" "$desc"
 }
 
 sub_run_unlike () {
     local cmd=$1 regex=$2 desc=$3
-    GOT=$(bash -c "$cmd" 2>&1)
+    sub_run "$cmd"
     unlike "$GOT" "$regex" "$desc"
 }
 
