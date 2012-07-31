@@ -123,7 +123,7 @@ diag () {
 run () {
     local cmd=$1 var=$2
     if [ "$cmd" = "-" ]; then
-        cmd=$(cat)
+        read -r -d '' cmd
     fi
     var=${var:-GOT}
     eval "$var=\$(eval \"\$cmd\" 2>&1)"
@@ -132,7 +132,7 @@ run () {
 ok () {
     local cmd=$1 desc=$2
     if [ "$cmd" = "-" ]; then
-        cmd=$(cat)
+        read -r -d '' cmd
     fi
     GOT=$(eval "$cmd" 2>&1)
     val_ok $? "$desc"
@@ -141,7 +141,7 @@ ok () {
 nok () {
     local cmd=$1 desc=$2
     if [ "$cmd" = "-" ]; then
-        cmd=$(cat)
+        read -r -d '' cmd
     fi
     GOT=$(eval "$cmd" 2>&1)
     val_nok $? "$desc"
@@ -149,9 +149,6 @@ nok () {
 
 is () {
     local got=$1 expected=$2 desc=$3 diff value
-    if [ "$expected" = "-" ]; then
-        expected=$(cat)
-    fi
     diff=$(diff -U5 -p <(cat <<< "$expected") <(cat <<< "$got"))
     value=$?
     val_ok $value "$desc"
@@ -169,9 +166,6 @@ is () {
 
 isnt () {
     local got=$1 unexpected=$2 desc=$3 value
-    if [ "$unexpected" = "-" ]; then
-        unexpected=$(cat)
-    fi
     [ "$got" != "$unexpected" ]
     value=$?
     val_ok $value "$desc"
@@ -281,18 +275,12 @@ unlike () {
 
 run_is () {
     local cmd=$1 expected=$2 desc=$3
-    if [ "$expected" = "-" ]; then
-        expected=$(cat)
-    fi
     GOT=$(eval "$cmd" 2>&1)
     is "$GOT" "$expected" "$desc"
 }
 
 run_isnt () {
     local cmd=$1 unexpected=$2 desc=$3
-    if [ "$unexpected" = "-" ]; then
-        unexpected=$(cat)
-    fi
     GOT=$(eval "$cmd" 2>&1)
     isnt "$GOT" "$unexpected" "$desc"
 }
@@ -312,7 +300,7 @@ run_unlike () {
 sub_run () {
     local cmd=$1 var=$2
     if [ "$cmd" = "-" ]; then
-        cmd=$(cat)
+        read -r -d '' cmd
     fi
     var=${var:-GOT}
     eval "$var=\$(bash -c \"\$cmd\" 2>&1)"
@@ -320,18 +308,12 @@ sub_run () {
 
 sub_run_is () {
     local cmd=$1 expected=$2 desc=$3
-    if [ "$expected" = "-" ]; then
-        expected=$(cat)
-    fi
     GOT=$(bash -c "$cmd" 2>&1)
     is "$GOT" "$expected" "$desc"
 }
 
 sub_run_isnt () {
     local cmd=$1 unexpected=$2 desc=$3
-    if [ "$unexpected" = "-" ]; then
-        unexpected=$(cat)
-    fi
     GOT=$(bash -c "$cmd" 2>&1)
     isnt "$GOT" "$unexpected" "$desc"
 }
