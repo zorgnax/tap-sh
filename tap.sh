@@ -135,18 +135,12 @@ run () {
 
 ok () {
     local cmd=$1 desc=$2
-    if [ "$cmd" = "-" ]; then
-        read -r -d '' cmd
-    fi
     run "$cmd"
     val_ok $? "$desc"
 }
 
 nok () {
     local cmd=$1 desc=$2
-    if [ "$cmd" = "-" ]; then
-        read -r -d '' cmd
-    fi
     run "$cmd"
     val_nok $? "$desc"
 }
