@@ -38,10 +38,7 @@ done_testing () {
             value=$((EXPECTED_TESTS - CURRENT_TEST + FAILED_TESTS))
         fi
     fi
-    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
-        exit $value
-    fi
-    return $value
+    exit $value
 }
 
 val_ok () {
@@ -198,10 +195,7 @@ skip_all () {
         desc=" $desc"
     fi
     echo "1..0 # SKIP$desc"
-    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
-        exit 0
-    fi
-    return 0
+    exit 0
 }
 
 todo () {
@@ -215,10 +209,7 @@ odot () {
 bail_out () {
     local desc=$1
     echo "Bail out!  $desc"
-    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
-        exit 255
-    fi
-    return 255
+    exit 255
 }
 
 test_ok () {
