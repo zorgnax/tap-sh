@@ -1,15 +1,12 @@
 #!/bin/bash
-. t/test.sh
-tap_is $'diag foo
-diag $\'foo\\nbar\'
-diag ""
-diag <<EOF
-hello
-world!
-EOF' '# foo
-# foo
-# bar
-# 
-# hello
-# world!'
+. tap.sh
+
+tap_is 'diag foo' '# foo'
+
+tap_is $'diag $\'foo\\nbar\'' $'# foo\n# bar'
+
+tap_is 'diag ""' '# '
+
+tap_is $'diag <<EOF\nhello\nworld!\nEOF' $'# hello\n# world!'
+
 done_testing

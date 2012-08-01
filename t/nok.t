@@ -1,58 +1,27 @@
 #!/bin/bash
-. t/test.sh
-tap_is $'nok true
-echo $?
-nok true foo
-echo $?
-nok <<EOCMD
-true
-EOCMD
-echo $?
-nok <<EOCMD foo
-true
-EOCMD
-echo $?
-nok false
-echo $?
-nok false foo
-echo $?
-nok <<EOCMD
-false
-EOCMD
-echo $?
-nok <<EOCMD foo
-false
-EOCMD
-echo $?
-nok <<EOCMD bar
+. tap.sh
+
+tap_is 'nok true' 'not ok 1
+#  Failed test at line 1'
+
+tap_is 'nok true foo' "not ok 1 - foo
+#  Failed test 'foo'
+#  at line 1"
+
+tap_is 'nok' $'not ok 1\n#  Failed test at line 1'
+
+tap_is 'nok false' 'ok 1'
+
+tap_is 'nok false foo' 'ok 1 - foo'
+
+tap_is $'nok \'
 for f in hello world!; do
-    echo [\\$f]
-done
-EOCMD
-echo $?
-echo "$GOT"' $'not ok 1
-#  Failed test at line 1
-1
-not ok 2 - foo
-#  Failed test \'foo\'
-#  at line 3
-1
-not ok 3
-#  Failed test at line 5
-1
-ok 4
-0
-ok 5
-0
-ok 6 - foo
-0
-not ok 7
-#  Failed test at line 17
-1
-ok 8
-0
-ok 9
-0
-tap.sh: line 146: bar: command not found'
+    echo [$f]
+done\'
+echo "$GOT"' 'not ok 1
+#  Failed test at line 4
+[hello]
+[world!]'
+
 done_testing
 
