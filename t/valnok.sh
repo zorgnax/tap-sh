@@ -2,11 +2,10 @@
 . tap.sh
 
 tap_is 'val_nok 0' 'not ok 1
-#  Failed test at line 1'
+#  Failed test'
 
 tap_is 'val_nok 0 "foo"' "not ok 1 - foo
-#  Failed test 'foo'
-#  at line 1"
+#  Failed test 'foo'"
 
 tap_is 'val_nok 1' 'ok 1'
 

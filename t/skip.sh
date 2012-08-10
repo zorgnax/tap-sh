@@ -13,8 +13,7 @@ tap_is 'skip false 3 || {
     ok false bax
 }' "ok 1 - baz
 not ok 2 - bax
-#  Failed test 'bax'
-#  at line 3"
+#  Failed test 'bax'"
 
 tap_is 'skip true 3 "a description" || {
     ok true hello
@@ -28,8 +27,7 @@ tap_is 'skip false 3 "a description" || {
     ok false derp
 }' "ok 1 - herp
 not ok 2 - derp
-#  Failed test 'derp'
-#  at line 3"
+#  Failed test 'derp'"
 
 done_testing
 

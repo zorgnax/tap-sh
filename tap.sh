@@ -9,15 +9,10 @@ CURRENT_TEST=0
 GOT=
 RETVAL=
 
-# check that the BASH_LINENO variable works as expected. if not, we can't
-# show line info
 if eval '[ "${BASH_LINENO[-1]}" -ge "0" ]' 2>/dev/null; then
     SHOW_LINE_INFO=1
 fi
 
-# allow the user to specify whether they want line info. since not all
-# versions of bash have a working BASH_LINENO variable, the tests should
-# explicitly unset SHOW_LINE_INFO.
 for arg in "$@"; do
     eval "$arg"
 done
@@ -79,11 +74,12 @@ val_ok () {
         if [ -n "${TODO+set}" ]; then
             echo -n "(TODO) " >&2
         fi
-        echo -n "test " >&2
+        echo -n "test" >&2
         if [ -n "$desc" ]; then
-            echo -n "'$desc'" >&2
+            echo -n " '$desc'" >&2
         fi
         show_line_info "$desc"
+        echo "" >&2
         ((FAILED_TESTS++))
     fi
     return $value
@@ -92,11 +88,10 @@ val_ok () {
 show_line_info () {
     local desc=$1 file line
     if [ ! "$SHOW_LINE_INFO" ]; then
-        echo "" >&2
         return
     fi
     if [ -n "$desc" ]; then
-        echo -en "\n#  " >&2
+        echo -en "\n# " >&2
     fi
     if [ "${FUNCNAME[@]: -1}" = "main" ]; then
         file=${BASH_SOURCE[-1]}
@@ -104,11 +99,11 @@ show_line_info () {
     else
         line=$((BASH_LINENO[-1] + 1))
     fi
-    echo -n "at " >&2
+    echo -n " at " >&2
     if [ -n "$file" ]; then
         echo -n "$file " >&2
     fi
-    echo "line $line" >&2
+    echo -n "line $line" >&2
 }
 
 val_nok () {
@@ -365,7 +360,7 @@ tap_is () {
             desc=$cmd
         fi
     fi
-    cmd=". tap.sh;$cmd"
+    cmd=". tap.sh SHOW_LINE_INFO=;$cmd"
     sub_run_is "$cmd" "$expected" "$desc"
 }
 

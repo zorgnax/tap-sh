@@ -6,16 +6,14 @@ ok true foo
 ok false bar
 odot' "ok 1 - foo # TODO
 not ok 2 - bar # TODO
-#  Failed (TODO) test 'bar'
-#  at line 3"
+#  Failed (TODO) test 'bar'"
 
 tap_is 'todo "later not now never always"
 ok true foo
 ok false bar
 odot' "ok 1 - foo # TODO later not now never always
 not ok 2 - bar # TODO later not now never always
-#  Failed (TODO) test 'bar'
-#  at line 3"
+#  Failed (TODO) test 'bar'"
 
 done_testing
 
