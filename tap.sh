@@ -9,6 +9,19 @@ CURRENT_TEST=0
 GOT=
 RETVAL=
 
+# check that the BASH_LINENO variable works as expected. if not, we can't
+# show line info
+if eval '[ "${BASH_LINENO[-1]}" -ge "0" ]' 2>/dev/null; then
+    SHOW_LINE_INFO=1
+fi
+
+# allow the user to specify whether they want line info. since not all
+# versions of bash have a working BASH_LINENO variable, the tests should
+# explicitly unset SHOW_LINE_INFO.
+for arg in "$@"; do
+    eval "$arg"
+done
+
 plan () {
     EXPECTED_TESTS=$1
     echo "1..$EXPECTED_TESTS"
@@ -42,7 +55,7 @@ done_testing () {
 }
 
 val_ok () {
-    local value=$1 desc=$2 file line
+    local value=$1 desc=$2
     ((CURRENT_TEST++))
     if [ -z "${value##*[!0-9]*}" ]; then
         value=1
@@ -68,23 +81,34 @@ val_ok () {
         fi
         echo -n "test " >&2
         if [ -n "$desc" ]; then
-            echo "'$desc'" >&2
-            echo -n "#  " >&2
+            echo -n "'$desc'" >&2
         fi
-        if [ "${FUNCNAME[@]: -1}" = "main" ]; then
-            file=${BASH_SOURCE[-1]}
-            line=${BASH_LINENO[-2]}
-        else
-            line=$((BASH_LINENO[-1] + 1))
-        fi
-        echo -n "at " >&2
-        if [ -n "$file" ]; then
-            echo -n "$file " >&2
-        fi
-        echo "line $line" >&2
+        show_line_info "$desc"
         ((FAILED_TESTS++))
     fi
     return $value
+}
+
+show_line_info () {
+    local desc=$1 file line
+    if [ ! "$SHOW_LINE_INFO" ]; then
+        echo "" >&2
+        return
+    fi
+    if [ -n "$desc" ]; then
+        echo -en "\n#  " >&2
+    fi
+    if [ "${FUNCNAME[@]: -1}" = "main" ]; then
+        file=${BASH_SOURCE[-1]}
+        line=${BASH_LINENO[-2]}
+    else
+        line=$((BASH_LINENO[-1] + 1))
+    fi
+    echo -n "at " >&2
+    if [ -n "$file" ]; then
+        echo -n "$file " >&2
+    fi
+    echo "line $line" >&2
 }
 
 val_nok () {
