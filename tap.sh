@@ -198,7 +198,7 @@ isnt () {
 }
 
 skip () {
-    local cmd=$1 n=$2 desc=$3
+    local desc=$1 n=$2 cmd=$3
     if run "$cmd"; then
         if [ -n "$desc" ]; then
             desc=" $desc"
