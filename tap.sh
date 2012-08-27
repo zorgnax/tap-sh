@@ -80,7 +80,9 @@ val_ok () {
         fi
         show_line_info "$desc"
         echo "" >&2
-        ((FAILED_TESTS++))
+        if [ -z "${TODO+set}" ]; then
+            ((FAILED_TESTS++))
+        fi
     fi
     return $value
 }
