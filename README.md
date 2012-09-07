@@ -73,15 +73,15 @@ convenience when working with Bash.
 FUNCTIONS
 =========
 
--   plan <n>
+-   `plan <n>`
 
-    Plan <n> tests. If you don't know how many tests there are going to
+    Plan `<n>` tests. If you don't know how many tests there are going to
     be leave this out. It will print a message like the following:
 
         1..5
 
--   val_ok <value> [<desc>]
--   val_nok <value> [<desc>]
+-   `val_ok <value> [<desc>]`
+-   `val_nok <value> [<desc>]`
 
     Tests whether a given value is 0. val_nok tests the opposite. Useful
     with return values from programs:
@@ -99,10 +99,10 @@ FUNCTIONS
         #  Failed test 'foo exists'
         #  at test.sh line 5
 
--   ok <cmd> [<desc>]
--   nok <cmd> [<desc>]
--   sub_ok <cmd> [<desc>]
--   sub_nok <cmd> [<desc>]
+-   `ok <cmd> [<desc>]`
+-   `nok <cmd> [<desc>]`
+-   `sub_ok <cmd> [<desc>]`
+-   `sub_nok <cmd> [<desc>]`
 
     Tests whether a given command returns successfully. nok does the
     oposite. This command is run in an eval so your shell will be
@@ -131,18 +131,18 @@ FUNCTIONS
 
         ok '[ -f foo ] && [ -f bar ]'
 
--   pass [<desc>]
--   fail [<desc>]
+-   `pass [<desc>]`
+-   `fail [<desc>]`
 
     Equivalent to `ok true`. Useful for when the test takes up more than
     can be neatly fit in a string. fail is the opposite.
 
--   is <got> <expected> [<desc>]
--   isnt <got> <unexpected> [<desc>]
--   run_is <cmd> <expected> [<desc>]
--   run_isnt <cmd> <unexpected> [<desc>]
--   sub_run_is <cmd> <expected> [<desc>]
--   sub_run_isnt <cmd> <expected> [<desc>]
+-   `is <got> <expected> [<desc>]`
+-   `isnt <got> <unexpected> [<desc>]`
+-   `run_is <cmd> <expected> [<desc>]`
+-   `run_isnt <cmd> <unexpected> [<desc>]`
+-   `sub_run_is <cmd> <expected> [<desc>]`
+-   `sub_run_isnt <cmd> <expected> [<desc>]`
 
     Tests whether the string you got is what you expected. isnt tests that
     its not the unexpected. The `run_*` version of these commands take a
@@ -175,8 +175,8 @@ FUNCTIONS
         # -baz
         # +bar
 
--   test_ok <op> <a> [<desc>]
--   test_ok <a> <op> <b> [<desc>]
+-   `test_ok <op> <a> [<desc>]`
+-   `test_ok <a> <op> <b> [<desc>]`
 
     Works like the `test` program (a.k.a. `[`) in the shell, but only
     takes two or three arguments (doesn't handle chaining tests with
@@ -194,12 +194,12 @@ FUNCTIONS
         #         -gt
         #     1024
 
--   like <got> <regex> [<desc>]
--   unlike <got> <regex> [<desc>]
--   run_like <cmd> <regex> [<desc>]
--   run_unlike <cmd> <regex> [<desc>]
--   sub_run_like <cmd> <regex> [<desc>]
--   sub_run_unlike <cmd> <regex> [<desc>]
+-   `like <got> <regex> [<desc>]`
+-   `unlike <got> <regex> [<desc>]`
+-   `run_like <cmd> <regex> [<desc>]`
+-   `run_unlike <cmd> <regex> [<desc>]`
+-   `sub_run_like <cmd> <regex> [<desc>]`
+-   `sub_run_unlike <cmd> <regex> [<desc>]`
 
     Tests that a string matches a given regex. With `unlike` its the
     opposite. Internally uses bash's [[ "$got" =~ $regex ]], so the
@@ -211,9 +211,9 @@ FUNCTIONS
             'google uses javascripts'
         echo "${BASH_REMATCH[1]}"
 
--   skip <desc> <n> [<cmd>] || {...}
+-   `skip <desc> <n> [<cmd>] || {...}`
 
-    Skips <n> tests in a block of commands under a certain condition.
+    Skips `<n>` tests in a block of commands under a certain condition.
 
         skip 'need the herpderp package' 2 '[ ! "$HERPDERPVERSION" ]' || {
             ok 'herp';
@@ -226,7 +226,7 @@ FUNCTIONS
         ok 2 - # skip need the herpderp package
 
 
--   skip_all [<desc>]
+-   `skip_all [<desc>]`
 
     Skips the entire test.
 
@@ -239,8 +239,8 @@ FUNCTIONS
     and exits immediately.
 
 
--   todo [<desc>]
--   odot
+-   `todo [<desc>]`
+-   `odot`
 
     Mark a series of tests as not ready yet.
 
@@ -257,7 +257,7 @@ FUNCTIONS
         #  Failed (TODO) test at ./test.sh line 6
         ok 3 # TODO everything wrapped together
 
--   bail_out [<desc>]
+-   `bail_out [<desc>]`
 
     Bail out of the test suite immediately.
 
@@ -269,8 +269,8 @@ FUNCTIONS
 
     and exits immediately
 
-- note [<mesg>]
-- diag [<mesg>]
+- `note [<mesg>]`
+- `diag [<mesg>]`
 
     Prints a message to the TAP output stream. `note` outputs to STDOUT and `diag` outputs to STDERR. You can use these functions as a filter:
 
@@ -281,8 +281,8 @@ FUNCTIONS
 
         # hello
 
--   run <cmd> [<var>] [<retval>]
--   sub_run <cmd> [<var>] [<retval>]
+-   `run <cmd> [<var>] [<retval>]`
+-   `sub_run <cmd> [<var>] [<retval>]`
 
     Runs a command and saves its output in a variable, by default $GOT,
     and its retval another variable, by default in $RETVAL. If you pass
