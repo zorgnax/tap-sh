@@ -16,14 +16,6 @@ SYNOPSIS
     pass
     is 'energy' 'green' 'incredible'
     test_ok 55 -gt 1024 'blah'
-    todo 'the foobar part is not implemented yet'
-        run_is 'pissant' 'all your best aint good enough' 'syzzerp'
-    odot
-    its_totally_cool=yes
-    skip 'i dont feel like it' 2 '[ "$its_totally_cool" ]' || {
-        run_is 'valmorphanize --limosine' 'jet'
-        run_is 'valmorphanize --your-face' 'woow'
-    }
     done_testing
 
 Returns:
@@ -32,33 +24,26 @@ Returns:
     ok 1 - this is an ok value
     not ok 2 - 55 is truth
     #  Failed test '55 is truth'
-    #  at ./t/synopsis.sh line 6
+    #  at ./synopsis.sh line 5
     not ok 3 - yup
     #  Failed test 'yup'
-    #  at ./t/synopsis.sh line 7
+    #  at ./synopsis.sh line 6
     #                    'maggot'
     #     doesn't match: '^keep|it|coming'
     ok 4
     not ok 5 - incredible
     #  Failed test 'incredible'
-    #  at ./t/synopsis.sh line 9
+    #  at ./synopsis.sh line 8
     #          got: 'energy'
     #     expected: 'green'
     not ok 6 - blah
     #  Failed test 'blah'
-    #  at ./t/synopsis.sh line 10
+    #  at ./synopsis.sh line 9
     #     55
     #         -gt
     #     1024
-    not ok 7 - syzzerp # TODO the foobar part is not implemented yet
-    #  Failed (TODO) test 'syzzerp'
-    #  at ./t/synopsis.sh line 12
-    #          got: 'tap.sh: line 149: pissant: command not found'
-    #     expected: 'all your best aint good enough'
-    ok 8 - # skip i dont feel like it
-    ok 9 - # skip i dont feel like it
-    # Looks like you planned 5 tests but ran 9.
-    # Looks like you failed 4 tests of 9 run.
+    # Looks like you planned 5 tests but ran 6.
+    # Looks like you failed 4 tests of 6 run.
 
 
 DESCRIPTION
