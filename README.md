@@ -112,7 +112,7 @@ FUNCTIONS
 
     There can be more than one statement provided in the command. It is
     advisable to chain commands with && rather than any other way since
-    a fauly command in the middle will short circuit the operation.
+    a faulty command in the middle will short circuit the operation.
 
         ok '[ -f foo ] && [ -f bar ]'
 
@@ -290,7 +290,7 @@ to do it:
 
     #!/bin/bash
     . tap.sh
-    temp=$(mktemp -d) && cd $temp && trap 'rm -rf $d' 0 &&
+    d=$(mktemp -d) && cd $d && trap 'rm -rf $d' 0 &&
     mkdir -p dir/subdir && touch dir/subdir/file2 && ln -s f symlink
     # rest of the test goes here. plan ... done_testing
 

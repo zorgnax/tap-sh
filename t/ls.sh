@@ -3,7 +3,7 @@
 
 # put self into a temp directory, deleted on exit,
 # populated with some files
-temp=$(mktemp -d) && cd $temp && trap 'rm -rf $d' 0
+d=$(mktemp -d) && cd $d && trap 'rm -rf $d' 0
 mkdir -p dir/subdir && touch dir/subdir/file2 && ln -s f symlink
 
 ok - <<EOCOMMAND 'ls runs successfully'
